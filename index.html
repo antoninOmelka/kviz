@@ -45,7 +45,7 @@
             .answers {
                 display: inline-block;
                 text-align: left;
-                           } 
+            } 
 
         </style>
 
@@ -66,11 +66,10 @@
 
 
         <script>
-            let answersToShow = [];
-            let slideNumber = 0;
+            let answersToShow = [];           
             let userAnswers = [];
-            const userInput = [];
             let output = [];
+            let slideNumber = 0;
     
             const myQuestions = [{
                 question: "Co je to JS?",
@@ -91,11 +90,11 @@
                 correctAnswer: "a"
             },
             {
-                question: "Stegosaurus je:",
+                question: "Je Javascript stejný jako Java?",
                 answers: {
-                    a: "Druh godzilly",
-                    b: "Produkt francouzské kuchyně",
-                    c: "Dinokámoš"
+                    a: "Ano",
+                    b: "Záleží na distibuci",
+                    c: "Ne"
                 },
                 correctAnswer: "c"
             }
@@ -176,7 +175,9 @@
             function checkAnswers() {            
                 let numOfCorrectAnsw = 0;            
                 showAllQuestions();
-    
+                
+
+
                 myQuestions.forEach((currentQuestion, questionIndex) => {
     
                     if(userAnswers[questionIndex] === currentQuestion.correctAnswer) {
