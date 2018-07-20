@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JS kvíz</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <style>
+            h1 {
+                margin-top: 100px;
+                margin-bottom: 50px;
+            }
+
+            h2 {
+                margin-bottom: 30px;
+            }
+
+            p {
+                font-size: 1.3em;
+            }
+
+            .marginBotom {
+                margin-bottom: 50px;    
+
+            }
+
+            .marginLeft {
+                margin-left: 30px;
+            }
+
+            button {
+                width: 120px
+            }
+
+            #quiz {
+                min-width: 50%;
+                max-width: 60%;
+                
+            } 
+
+            .answers {
+                display: inline-block;
+                text-align: left;
+                           } 
+
+        </style>
+
+        <div class="container text-center">
+            <h1>Velký internetový kvíz!</h1>
+                       
+            <div class="center-block" id="quiz"></div>
+            
+            <div id="results"></div>
+            <div >
+                <button class="btn btn-primary btn-lg float-left marginBotom" id="previous">Předchozí</button>
+                <button class="btn btn-primary btn-lg float-right marginBotom" id="next">Další</button>
+            </div>
+            <div class="row">
+                <button class="btn btn-success btn-lg" id="submit">Odeslat</button>
+            </div>            
+        </div>
+
+
+        <script>
+            let answersToShow = [];
+            let slideNumber = 0;
+            let userAnswers = [];
+            const userInput = [];
+            let output = [];
+    
+            const myQuestions = [{
+                question: "Co je to JS?",
+                answers: {
+                    a: "Slang mladých",
+                    b: "Programovací jazyk",
+                    c: "Jednotné slévárny"
+                },
+                correctAnswer: "b"
+            },
+            {
+                question: "JS je technologie fungující na:",
+                answers: {
+                    a: "FrontEndu",
+                    b: "BackEndu",
+                    c: "LowEndu"
+                },
+                correctAnswer: "a"
+            },
+            {
+                question: "Stegosaurus je:",
+                answers: {
+                    a: "Druh godzilly",
+                    b: "Produkt francouzské kuchyně",
+                    c: "Dinokámoš"
+                },
+                correctAnswer: "c"
+            }
+            ];
+    
+            function buildQuiz(currentQuestion, questionIndex) {
+                output.push(
+                            `<div class="row marginBotom well" id=question${questionIndex}>
+                                <div class="question">                            
+                                    <h2>${currentQuestion.question}</h2>
+                                </div>                     
+                        `);            
+                    answersToShow = [];
+    
+                   output.push(`<div class="answers center-block">`);  
+    
+                    for(letter in currentQuestion.answers) {                    
+                        answersToShow.push( `
+                            <div class="radio">
+                                 <p><label><input type="radio" name="question${questionIndex}" value="${letter}">${currentQuestion.answers[letter]}</input></label></p>
+                            </div>
+                        `);                 
+                    }
+                    answersToShow.push("</div>");
+                    
+                    let noCommas = answersToShow.join('');
+                    output.push(noCommas);
+                    output.push('</div>');
+                    document.getElementById('quiz').innerHTML = output.join('');
+    
+                   
+    
+            }  
+            
+            function showOneQuestion() {
+                output = [];
+                myQuestions.forEach((currentQuestion, questionIndex) => {
+                    
+                    if(questionIndex === slideNumber){
+                       
+                        buildQuiz(currentQuestion, questionIndex);
+                  }
+                    });
+    
+                if(slideNumber <= 0) {
+                        document.getElementById('previous').setAttribute('disabled', 'disabled');
+                    }
+                    else {
+                        document.getElementById('previous').removeAttribute('disabled');   
+                    }
+    
+                    if(slideNumber >= myQuestions.length - 1) {
+                        document.getElementById('next').setAttribute('disabled', 'disabled');  
+                        
+                    }
+                    else {
+                        document.getElementById('next').removeAttribute('disabled');   
+                    }
+                    
+                    if(!(slideNumber === (myQuestions.length - 1))) {
+                        document.getElementById('submit').style.display = "none";
+                    }
+                    else {
+                        document.getElementById('submit').style.display = "inline";   
+                    }        
+            }
+    
+            function showAllQuestions() {
+                output = [];
+    
+                myQuestions.forEach((currentQuestion, questionIndex) => {
+                   
+                    buildQuiz(currentQuestion, questionIndex);
+            
+               });
+            }
+    
+            function checkAnswers() {            
+                let numOfCorrectAnsw = 0;            
+                showAllQuestions();
+    
+                myQuestions.forEach((currentQuestion, questionIndex) => {
+    
+                    if(userAnswers[questionIndex] === currentQuestion.correctAnswer) {
+                        document.getElementById(`question${questionIndex}`).style.color = "green";
+                        numOfCorrectAnsw++;
+                    }
+                    else {
+                        document.getElementById(`question${questionIndex}`).style.color = "red";
+                    }
+                    
+                    document.getElementById('results').innerHTML = `<p>${numOfCorrectAnsw} správných odpovědí ze ${myQuestions.length}</p>`;    
+                });
+    
+                document.getElementById('next').style.display = "none";
+                document.getElementById('previous').style.display = "none";
+                document.getElementById('submit').style.display = "none";           
+            }
+            
+            function saveUserAnswers() {          
+    
+                    if(document.querySelector(`input[name="question${slideNumber}"]:checked`)) {
+                        userAnswers[slideNumber] = document.querySelector(`input[name="question${slideNumber}"]:checked`).value || "";
+                    }            
+            }
+    
+            function nextQuestion() {
+                saveUserAnswers();
+                slideNumber++;
+                showOneQuestion();
+            }
+    
+            function previousQuestion() {
+                slideNumber--;
+                showOneQuestion();
+            }
+    
+            function submitQuiz() {
+                saveUserAnswers();
+                checkAnswers();
+            }
+    
+            showOneQuestion();
+    
+            document.getElementById('submit').addEventListener('click', submitQuiz);
+            document.getElementById('next').addEventListener('click', nextQuestion);
+            document.getElementById('previous').addEventListener('click', previousQuestion);
+        </script>
+
+    </body>
+</html>
