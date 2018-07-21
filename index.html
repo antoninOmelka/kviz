@@ -6,23 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>JS kvíz</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    
-    <div id="top" class="container-fluid text-center marginBotom">
+    <style>
+        h1 {
+            margin-bottom: 20px;  
+        }
+
+        h2 {
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+
+        #score {
+            font-size: 1.4em;
+        }
+
+        .marginBotom {
+            margin-bottom: 30px;
+
+        }
+
+        .marginBotom10 {
+            margin-bottom: 15px;
+        }
+
+        .marginLeft {
+            margin-left: 30px;
+        }
+
+        .navButton {
+            width: 120px;
+        }
+
+        .subButton {
+            width: 240px;
+        }
+
+        #quiz {
+          max-width: 350px;
+          /*  min-width: 50%;
+            max-width: 60%;
+            width: 50%;
+            max-width: 400px;*/
+        }
+
+        .answers {
+            width: 55%;
+            display: inline-block;
+            text-align: left;
+        }
+        #top {
+            background-color: black;
+            color: white;
+           
+        }
+
+    </style>
+
+<div id="top" class="container-fluid text-center marginBotom">
         <h1 class="">Javascript kvíz!</h1>
-    </div>
+</div>
     <div class="container text-center">
-
-
+        
+        
         <div id="score" class="row marginBotom"></div>
-        <div id="quiz" class="row center-block"></div>
+        <div id="quiz" class="row center-block"></div>        
         <div class=" row btn-group marginBotom10">
-            <button id="previous" class="navButton btn btn-primary btn-lg">Předchozí</button>
+            <button id="previous" class="navButton btn btn-primary btn-lg">Předchozí</button>            
             <button id="next" class="navButton btn btn-primary btn-lg">Další</button>
         </div>
         <div class="row">
@@ -119,9 +176,9 @@
             }
 
             if (slideNumber === (myQuestions.length - 1)) {
-                document.getElementById('submit').removeAttribute('disabled');
+               document.getElementById('submit').removeAttribute('disabled');
             }
-            else {
+            else {                
                 document.getElementById('submit').setAttribute('disabled', 'disabled');
             }
         }
