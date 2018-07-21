@@ -34,12 +34,16 @@
 
         }
 
+        .marginBotom10 {
+            margin-bottom: 15px;
+        }
+
         .marginLeft {
             margin-left: 30px;
         }
 
-        button {
-            width: 120px
+        .navButton {
+            width: 120px;
         }
 
         #quiz {
@@ -60,11 +64,13 @@
         <div class="center-block" id="quiz"></div>
         
         <div id="results"></div>
-        <div>
-            <button class="btn btn-primary btn-lg float-left marginBotom" id="previous">Předchozí</button>
-            <button class="btn btn-success btn-lg marginBotom" id="submit">Odeslat</button>
-            <button class="btn btn-primary btn-lg float-right marginBotom" id="next">Další</button>
+        
+        <div class="btn-group marginBotom10">
+            <button class="navButton btn btn-primary  btn-lg " id="previous">Předchozí</button>
+            
+            <button class="navButton btn btn-primary btn-lg " id="next">Další</button>
         </div>
+        <button class="btn btn-success btn-lg " id="submit">Odeslat</button>
         
     </div>
 
