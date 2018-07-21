@@ -13,8 +13,7 @@
 <body>
     <style>
         h1 {
-            margin-top: 100px;
-            margin-bottom: 50px;
+            margin-top: 20px;
         }
 
         h2 {
@@ -22,11 +21,11 @@
         }
 
         p {
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
 
         #score {
-            font-size: 1.5em;
+            font-size: 1.4em;
         }
 
         .marginBotom {
@@ -47,9 +46,10 @@
         }
 
         #quiz {
-            min-width: 50%;
-            max-width: 60%;
-
+          /*  min-width: 50%;
+            max-width: 60%;*/
+            width: 50%;
+            max-width: 400px;
         }
 
         .answers {
@@ -59,19 +59,16 @@
     </style>
 
     <div class="container text-center">
-        <h1>Velký internetový kvíz!</h1>
-        <div id="score" class="marginBotom"></div>
-        <div class="center-block" id="quiz"></div>
-        
-        <div id="results"></div>
-        
-        <div class="btn-group marginBotom10">
-            <button class="navButton btn btn-primary  btn-lg " id="previous">Předchozí</button>
-            
-            <button class="navButton btn btn-primary btn-lg " id="next">Další</button>
+        <h1 class="row marginBotom">Javascript kvíz!</h1>
+        <div id="score" class="row marginBotom"></div>
+        <div id="quiz" class="row center-block"></div>        
+        <div class=" row btn-group marginBotom10">
+            <button id="previous" class="navButton btn btn-primary btn-lg">Předchozí</button>            
+            <button id="next" class="navButton btn btn-primary btn-lg">Další</button>
         </div>
-        <button class="btn btn-success btn-lg " id="submit">Odeslat</button>
-        
+        <div class="row">
+            <button id="submit" class="btn btn-success btn-lg" disabled>Odeslat</button>
+        </div>
     </div>
 
     <script>
@@ -113,7 +110,7 @@
             output.push(
                 `<div class="row marginBotom well" id=question${questionIndex}>
                                 <div class="question">                            
-                                    <h2>${currentQuestion.question}</h2>
+                                    <h3>${currentQuestion.question}</h3>
                                 </div>                     
                         `);
             answersToShow = [];
@@ -160,12 +157,11 @@
                 document.getElementById('next').removeAttribute('disabled');
             }
 
-            if (!(slideNumber === (myQuestions.length - 1))) {
-               // document.getElementById('submit').style.display = "none";
-               document.getElementById('submit').setAttribute('disabled', 'disabled');
+            if (slideNumber === (myQuestions.length - 1)) {
+               document.getElementById('submit').removeAttribute('disabled');
             }
-            else {
-                document.getElementById('submit').removeAttribute('disabled');
+            else {                
+                document.getElementById('submit').setAttribute('disabled', 'disabled');
             }
         }
 
