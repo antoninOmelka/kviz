@@ -25,6 +25,10 @@
             font-size: 1.3em;
         }
 
+        #score {
+            font-size: 1.5em;
+        }
+
         .marginBotom {
             margin-bottom: 50px;
 
@@ -52,15 +56,16 @@
 
     <div class="container text-center">
         <h1>Velký internetový kvíz!</h1>
+        <div id="score" class="marginBotom"></div>
         <div class="center-block" id="quiz"></div>
+        
         <div id="results"></div>
         <div>
             <button class="btn btn-primary btn-lg float-left marginBotom" id="previous">Předchozí</button>
+            <button class="btn btn-success btn-lg marginBotom" id="submit">Odeslat</button>
             <button class="btn btn-primary btn-lg float-right marginBotom" id="next">Další</button>
         </div>
-        <div class="row">
-            <button class="btn btn-success btn-lg" id="submit">Odeslat</button>
-        </div>
+        
     </div>
 
     <script>
@@ -109,7 +114,7 @@
 
             output.push(`<div class="answers center-block">`);
 
-            for (letter in currentQuestion.answers) {
+            for (let letter in currentQuestion.answers) {
                 answersToShow.push(`
                             <div class="radio">
                                  <p><label><input type="radio" name="question${questionIndex}" value="${letter}">${currentQuestion.answers[letter]}</input></label></p>
@@ -150,10 +155,11 @@
             }
 
             if (!(slideNumber === (myQuestions.length - 1))) {
-                document.getElementById('submit').style.display = "none";
+               // document.getElementById('submit').style.display = "none";
+               document.getElementById('submit').setAttribute('disabled', 'disabled');
             }
             else {
-                document.getElementById('submit').style.display = "inline";
+                document.getElementById('submit').removeAttribute('disabled');
             }
         }
 
@@ -181,7 +187,7 @@
                     document.getElementById(`question${questionIndex}`).style.color = "red";
                 }
 
-                document.getElementById('results').innerHTML = `<p>${numOfCorrectAnsw} správných odpovědí ze ${myQuestions.length}</p>`;
+                document.getElementById('score').innerHTML = `<p>${numOfCorrectAnsw} správných odpovědí ze ${myQuestions.length}</p>`;
             });
 
             document.getElementById('next').style.display = "none";
